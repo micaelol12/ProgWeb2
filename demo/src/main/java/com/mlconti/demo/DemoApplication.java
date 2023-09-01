@@ -28,9 +28,8 @@ public class DemoApplication {
 			deptoRep.save(depto1);
 			deptoRep.save(depto2);
 
-
 			Funcionario func1 = new Funcionario(null, "Micael", depto2);
-			Funcionario func2 = new Funcionario(null,"Viviane",depto1);
+			Funcionario func2 = new Funcionario(null, "Viviane", depto1);
 			funcRep.save(func1);
 			funcRep.save(func2);
 		};
