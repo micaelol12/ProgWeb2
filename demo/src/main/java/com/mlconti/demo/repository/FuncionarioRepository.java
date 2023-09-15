@@ -11,8 +11,8 @@ import java.util.List;
 public interface FuncionarioRepository extends JpaRepository<Funcionario, Integer> {
 
     @Query("SELECT objeto_func FROM Funcionario objeto_func WHERE objeto_func.departamento_pai.id_depto = :pIdDepto ORDER BY nm_funcionario")
-    List<Funcionario> findByDepto(@Param(value="pIdDepto")Integer pIdDepto);
+    List<Funcionario> findByDepto(@Param(value = "pIdDepto") Integer pIdDepto);
 
     @Query("SELECT objeto_func FROM Funcionario objeto_func WHERE objeto_func.nm_funcionario ILIKE %:pNome% ORDER BY nm_funcionario")
-    List<Funcionario> findByName(@Param(value="pNome")String pNome);
+    List<Funcionario> findByName(@Param(value = "pNome") String pNome);
 }
