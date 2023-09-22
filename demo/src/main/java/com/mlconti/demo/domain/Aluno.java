@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -70,7 +71,8 @@ public class Aluno implements Serializable {
     private String nm_aluno;
 
     @ManyToMany(mappedBy = "alunos")
-    @JsonIgnore
+
+    @JsonIgnoreProperties("alunos")
     private List<Aula> aulas = new ArrayList<>();
 
     public Integer getId_aluno() {
@@ -95,6 +97,14 @@ public class Aluno implements Serializable {
 
     public void setAulas(List<Aula> aulas) {
         this.aulas = aulas;
+    }
+
+    public void addAula(Aula a) {
+        this.aulas.add(a);
+    }
+
+    public void removeAula(Aula a) {
+        this.aulas.remove(a);
     }
 
 }

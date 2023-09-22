@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mlconti.demo.domain.Aluno;
 import com.mlconti.demo.domain.Aula;
-import com.mlconti.demo.domain.Funcionario;
 import com.mlconti.demo.exceptions.ObjectNotFoundException;
 import com.mlconti.demo.repository.AlunoRepository;
 import com.mlconti.demo.repository.AulaRepository;
@@ -44,11 +44,23 @@ public class AulaController {
         Aluno aluno = alunoRepository.findById(id_aluno)
                 .orElseThrow(() -> new ObjectNotFoundException("Aluno " + id_aluno + " não encontrada"));
 
-        List<Aluno> listaAlunos = aula.getAlunos();
+        aula.addAluno(aluno);
 
-        listaAlunos.add(aluno);
+        aulaRepository.save(aula);
 
-        aula.setAlunos(listaAlunos);
+        return ResponseEntity.ok().body(aula);
+    }
+
+    
+    @DeleteMapping(value = "/{id_aula}/aluno/{id_aluno}")
+    public ResponseEntity<Aula> deleteAlunoAula(@Valid @PathVariable Integer id_aula,
+            @Valid @PathVariable Integer id_aluno) {
+        Aula aula = aulaRepository.findById(id_aula)
+                .orElseThrow(() -> new ObjectNotFoundException("Aula " + id_aula + " não encontrada"));
+        Aluno aluno = alunoRepository.findById(id_aluno)
+                .orElseThrow(() -> new ObjectNotFoundException("Aluno " + id_aluno + " não encontrada"));
+
+        aula.removeAluno(aluno);
 
         aulaRepository.save(aula);
 

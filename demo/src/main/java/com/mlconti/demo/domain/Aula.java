@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -62,8 +62,8 @@ public class Aula implements Serializable {
     @NotEmpty
     private String nm_aula;
 
+   @JsonIgnoreProperties("aulas")
     @ManyToMany
-    @JsonIgnore
     @JoinTable(name = "aula_aluno", joinColumns = @JoinColumn(name = "id_aula"), inverseJoinColumns = @JoinColumn(name = "id_aluno"), uniqueConstraints = @UniqueConstraint(name = "aula_aluno_PK", columnNames = {
             "id_aula", "id_aluno" }))
     private List<Aluno> alunos = new ArrayList<>();
@@ -99,6 +99,14 @@ public class Aula implements Serializable {
 
     public void setAlunos(List<Aluno> alunos) {
         this.alunos = alunos;
+    }
+
+    public void addAluno(Aluno a) {
+        this.alunos.add(a);
+    }
+
+    public void removeAluno(Aluno a) {
+        this.alunos.add(a);
     }
 
 }
